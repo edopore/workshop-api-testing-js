@@ -23,14 +23,10 @@
   "homepage": "https://github.com/edopore/workshop-api-testing-js#readme",
   "devDependencies": {
     "chai": "^4.3.6",
-<<<<<<< HEAD
     "http-status-codes": "^2.2.0",
     "mocha": "^10.0.0"
   },
   "dependencies": {
     "axios": "^0.27.2"
-=======
-    "mocha": "^10.0.0"
->>>>>>> ee34b4cb333778a6df52b2348eddbba040caa400
   }
 }
