@@ -43,7 +43,7 @@ describe('First Api Tests', () => {
             connected : 'false',
             username : 'figaro'
         }
-        const response = await axios.patch('https://httpbin.org/patch',{datapatch});
+        const response = await axios.patch('https://httpbin.org/patch', datapatch);
         expect(response.status).to.equal(StatusCodes.OK);
         expect(response.data.json.datapatch.id).to.eql(datapatch.id)
     });
