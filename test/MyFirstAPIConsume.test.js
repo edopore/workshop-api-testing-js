@@ -31,7 +31,7 @@ describe('First Api Tests', () => {
             age : '28',
             city : 'Mocoa'
         }
-        const response = await axios.put('https://httpbin.org/put', dataput );
+        const response = await axios.put('https://httpbin.org/put', dataput);
         expect(response.status).to.equal(StatusCodes.OK);
         expect(response.data.json).to.eql(dataput)
     });
