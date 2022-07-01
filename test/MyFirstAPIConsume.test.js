@@ -33,7 +33,7 @@ describe('First Api Tests', () => {
         }
         const response = await axios.put('https://httpbin.org/put', dataput );
         expect(response.status).to.equal(StatusCodes.OK);
-        expect(response.data.json.dataput).to.eql(dataput)
+        expect(response.data.json).to.eql(dataput)
     });
 
     it('Consume PATCH Service', async () => {
@@ -43,9 +43,9 @@ describe('First Api Tests', () => {
             connected : 'false',
             username : 'figaro'
         }
-        const response = await axios.patch('https://httpbin.org/patch', datapatch);
+        const response = await axios.patch('https://httpbin.org/patch', datapatch );
         expect(response.status).to.equal(StatusCodes.OK);
-        expect(response.data.json.datapatch.id).to.eql(datapatch.id)
+        expect(response.data.json).to.eql(datapatch)
     });
 
     it('Consume DELETE Service', async () => {
