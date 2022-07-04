@@ -9,7 +9,4 @@ extends:
   - plugin:import/warnings
 rules:
   "comma-dangle": ["error", "never"]
-<<<<<<< HEAD
   "linebreak-style": ["error", "windows"]
-=======
->>>>>>> 86dc72ba15aebfd548e9b1f30e78e3e04258a515
