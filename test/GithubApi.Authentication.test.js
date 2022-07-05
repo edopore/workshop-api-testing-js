@@ -3,7 +3,7 @@ const { expect } = require('chai');
 const axios = require('axios');
 
 const urlBase = 'https://api.github.com';
-const githubUserName = 'AgileTestingColombia';
+const githubUserName = 'edopore';
 const repository = 'workshop-api-testing-js';
 
 describe('Github Api Test', () => {
