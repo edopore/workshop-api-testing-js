@@ -14,7 +14,6 @@ describe('Github Api Test', () => {
           Authorization: `token ${process.env.ACCESS_TOKEN}`
         }
       });
-
       expect(response.status).to.equal(StatusCodes.OK);
       expect(response.data.description).equal('This is a Workshop about Api Testing in JavaScript');
     });
@@ -23,7 +22,6 @@ describe('Github Api Test', () => {
         `${urlBase}/repos/${githubUserName}/${repository}`,
         { access_token: process.env.ACCESS_TOKEN }
       );
-
       expect(response.status).to.equal(StatusCodes.OK);
       expect(response.data.description).equal('This is a Workshop about Api Testing in JavaScript');
     });
