@@ -37,6 +37,7 @@
     "superagent": "^8.0.0"
   },
   "dependencies": {
-    "axios": "^0.27.2"
+    "axios": "^0.27.2",
+    "md5": "^2.3.0"
   }
 }
