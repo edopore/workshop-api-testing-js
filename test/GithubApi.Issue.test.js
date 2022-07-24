@@ -14,8 +14,14 @@ const Access = axios.create({
     Authorization: `token ${process.env.ACCESS_TOKEN}`
   }
 });
+const issueCreatedResponse = {
+  title: 'First Issue Title'
+};
+const bodyIssue = {
+  body: 'First body Issue'
+};
 
-describe('Github Api Test', () => {
+describe('Consume PUT method', () => {
   it('Login User', async () => {
     /* Test to verify if account has at least 1 public repository */
     const response = await Access.get(`${urlBase}/user`);
@@ -30,21 +36,22 @@ describe('Github Api Test', () => {
     expect(repository.name).to.equal(repositoryName);
     expect(repository.private).to.equal(false);
   });
-  it('POST method for issues', async () => {
+  describe('POST method consumption for issues', () => {
     /* Create a new issue with POST method */
-    const issue = {
-      title: 'First Issue Title'
-    };
-    const response = await Access.post(`${urlBase}/repos/${githubUserName}/${repositoryName}/issues`, issue);
-    expect(response.status).to.equal(StatusCodes.CREATED);
-  });
-  it('PATCH method for issues created in PUT method', async () => {
-    /* Update an issue created at POST method */
-    const issueNumber = 9;
-    const issue = {
-      body: 'First body Issue'
-    };
-    const response = await Access.post(`${urlBase}/repos/${githubUserName}/${repositoryName}/issues/${issueNumber}`, issue);
-    expect(response.status).to.equal(StatusCodes.OK);
+    let issueUrl;
+    before(async () => {
+      const response = await Access.post(`${urlBase}/repos/${githubUserName}/${repositoryName}/issues`, issueCreatedResponse);
+      issueUrl = response;
+    });
+    it('POST method consumption for issues', () => {
+      expect(issueUrl.status).to.equal(StatusCodes.CREATED);
+    });
+    it('PATCH method for issues created in PUT method', async () => {
+      /* Update an issue created at POST method */
+      const response = await Access.patch(`${issueUrl.data.url}`, bodyIssue);
+      expect(response.status).to.equal(StatusCodes.OK);
+      expect(response.data.title).to.equal(issueCreatedResponse.title);
+      expect(response.data.body).to.equal(bodyIssue.body);
+    });
   });
 });

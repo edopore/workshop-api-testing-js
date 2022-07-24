@@ -13,6 +13,7 @@ const company = 'Perficient Latam';
 const name = 'Alejandro Perdomo';
 const repoName = 'jasmine-json-report';
 const desc = 'A Simple Jasmine JSON Report';
+const fileName = 'README.md';
 
 describe('Github Api Test', () => {
   let userResponse;
@@ -47,8 +48,11 @@ describe('Github Api Test', () => {
     describe('GET repos content', () => {
       // code to verify the readme and to download and verify the md5
       let fileDownload;
+      let readmeFile;
+
       before(async () => {
         fileDownload = await axios.get(`${repository.url}/contents`);
+        readmeFile = fileDownload.data.find((file) => file.name === fileName);
       });
       it('GET README.md file info', () => {
         expect(fileDownload.data).to.containSubset([{
@@ -56,11 +60,11 @@ describe('Github Api Test', () => {
           path: 'README.md',
           sha: '360eee6c223cee31e2a59632a2bb9e710a52cdc0'
         }]);
-      });
-      it('Download README.md file and check md5', async () => {
-        const fileContent = await axios.get(`https://raw.githubusercontent.com/${githubUserName}/${repoName}/master/README.md`);
-        expect(fileContent.status).to.equal(StatusCodes.OK);
-        expect(md5(fileContent.data)).to.equal('497eb689648cbbda472b16baaee45731');
+        it('Download README.md file and check md5', async () => {
+          const fileContent = await axios.get(`${readmeFile.download_url}`);
+          expect(fileContent.status).to.equal(StatusCodes.OK);
+          expect(md5(fileContent.data)).to.equal('497eb689648cbbda472b16baaee45731');
+        });
       });
     });
   });
