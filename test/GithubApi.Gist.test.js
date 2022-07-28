@@ -12,7 +12,7 @@ const Access = axios.create({
     Authorization: `token ${process.env.ACCESS_TOKEN}`
   }
 });
-const query = {
+const gistData = {
   description: 'Example of a gist',
   files: {
     'README.md': {
@@ -20,34 +20,30 @@ const query = {
     }
   }
 };
-describe('DELETE Consumption and resources doesn not exist', () => {
-  let createGist;
+describe('DELETE method consumption and resources that does not exist', () => {
+  let gist;
   before(async () => {
-    createGist = await Access.post(`${urlBase}/gists`, query);
+    gist = await Access.post(`${urlBase}/gists`, gistData);
   });
   it('Create a gist with POST and Promises', () => {
-    expect(createGist.status).to.equal(StatusCodes.CREATED);
-    expect(createGist.data).to.containSubset({
-      description: query.description,
-      files: query.files,
-      public: false
-    });
+    expect(gist.status).to.equal(StatusCodes.CREATED);
+    expect(gist.data).to.containSubset(gistData);
   });
   it('Use Hypermedia to search gist created', async () => {
-    const gistConsult = await Access.get(`${createGist.data.url}`);
+    const gistConsult = await Access.get(`${gist.data.url}`);
     expect(gistConsult.status).to.equal(StatusCodes.OK);
   });
   it('Use DELETE method to erase gist', async () => {
-    const deleteGist = await Access.delete(`${createGist.data.url}`);
+    const deleteGist = await Access.delete(`${gist.data.url}`);
     expect(deleteGist.status).to.equal(StatusCodes.NO_CONTENT);
   });
   it('Try to get deleted gist', async () => {
     let gistDeletedConsult;
     try {
-      gistDeletedConsult = await Access.get(`${createGist.data.url}`);
+      gistDeletedConsult = await Access.get(`${gist.data.url}`);
     } catch (error) {
       gistDeletedConsult = error;
-      expect(gistDeletedConsult.response.status).to.equal(StatusCodes.NOT_FOUND);
     }
+    expect(gistDeletedConsult.response.status).to.equal(StatusCodes.NOT_FOUND);
   });
 });
